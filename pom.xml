@@ -9,12 +9,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <!-- Added Distribution Management -->
+    <!-- Updated Distribution Management -->
     <distributionManagement>
-        <repository>
+        <snapshotRepository>
             <id>nexus</id>
-            <url>http://44.203.157.249:8081/repository/maven-releases/</url>
-        </repository>
+            <url>http://44.203.157.249:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <build>
