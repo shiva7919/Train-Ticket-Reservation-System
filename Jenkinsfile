@@ -91,11 +91,13 @@ pipeline {
 
     post {
         always {
-            // FIX: cleanWs requires a workspace, so we wrap it in a node block.
-            node {
-                cleanWs()
+            script {
+                if (env.WORKSPACE) {
+                    cleanWs()
+                }
             }
         }
     }
 }
+
  
