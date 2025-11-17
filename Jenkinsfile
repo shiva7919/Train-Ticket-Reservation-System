@@ -9,7 +9,7 @@ pipeline {
     }
 
     tools {
-        maven 'Maven'   // Updated from Maven-3 → Maven
+        maven 'Maven'
     }
 
     stages {
@@ -49,7 +49,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
 
-                    // Generate temporary settings.xml with Nexus credentials
                     sh '''
                     echo "<settings>
                             <servers>
@@ -62,7 +61,6 @@ pipeline {
                         </settings>" > settings.xml
                     '''
 
-                    // Deploy artifact to Nexus
                     sh 'mvn deploy -DskipTests -s settings.xml'
                 }
             }
@@ -93,7 +91,11 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            // FIX: cleanWs requires a workspace, so we wrap it in a node block.
+            node {
+                cleanWs()
+            }
         }
     }
 }
+ 
