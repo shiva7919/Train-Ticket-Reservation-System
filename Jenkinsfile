@@ -9,7 +9,7 @@ pipeline {
     }
 
     tools {
-        maven 'Maven-3'
+        maven 'Maven'   // Updated from Maven-3 → Maven
     }
 
     stages {
@@ -49,6 +49,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
 
+                    // Generate temporary settings.xml with Nexus credentials
                     sh '''
                     echo "<settings>
                             <servers>
@@ -61,6 +62,7 @@ pipeline {
                         </settings>" > settings.xml
                     '''
 
+                    // Deploy artifact to Nexus
                     sh 'mvn deploy -DskipTests -s settings.xml'
                 }
             }
